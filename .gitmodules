@@ -1,0 +1,3 @@
+[submodule "alm2ilamb_wkflow"]
+	path = alm2ilamb_wkflow
+	url = https://minxu@bitbucket.org/minxu/alm2ilamb_wkflow.git

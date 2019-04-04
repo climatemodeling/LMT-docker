@@ -1,0 +1,21 @@
+name: lmt-bm-venv-py36
+
+channels:
+  - conda-forge
+
+dependencies:
+  - python>=3.6
+  - numpy>=1.14.5
+  - scipy
+  - sympy
+  - matplotlib
+  - basemap
+  - netcdf4
+  - cf_units>=2.0.1
+  - requests
+  - mpich
+  - mpi4py
+  - nco
+  - pip:
+    - ILAMB
+   

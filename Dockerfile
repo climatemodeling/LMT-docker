@@ -1,24 +1,33 @@
+#get the base 
 FROM continuumio/miniconda3
 
 
+#ENTRYPOINT [ “/bin/bash”, “-c” ]
+ 
+ADD lmt-bm-venv-py3.yml /tmp/lmt-bm-venv.yml
 
-ADD ilamb-venv.yml /tmp/ilamb-venv.yml
+RUN conda env create -f /tmp/lmt-bm-venv.yml
 
+#activate the venv automatically
+RUN echo "source activate $(head -1 /tmp/lmt-bm-venv.yml | cut -d' ' -f2)" > ~/.bashrc
+#it seemed that the following line are not needed
+#ENV PATH /opt/conda/envs/$(head -1 /tmp/lmt-venv.yml | cut -d' ' -f2)/bin:$PATH
+#RUN echo "source activate env" > ~/.bashrc
 
-RUN echo "source activate $(head -1 /tmp/ilamb-venv.yml | cut -d' ' -f2)" > ~/.bashrc
-ENV PATH /opt/conda/envs/$(head -1 /tmp/ilamb-venv.yml | cut -d' ' -f2)/bin:$PATH
+WORKDIR /home/lmtuser
 
-RUN conda env create -f ilamb-venv.yml
-RUN echo "source activate env" > ~/.bashrc
+RUN mkdir /home/lmtuser/ILAMB_ROOT
+ENV ILAMB_ROOT /home/lmtuser/ILAMB_ROOT
 
-WORKDIR ILAMB_WK
+#set up the ILAMB running directory
+RUN mkdir /home/lmtuser/ILAMB_ROOT/MODEL
+RUN mkdir /home/lmtuser/ILAMB_ROOT/DATA
 
-COPY 
+#set up postprocessing or comorizing directories
+RUN mkdir /home/lmtuser/lmt_wkflow
 
-
-ENV ILAMB_ROOT ILAMB_WK/ILAMB_ROOT
-
+ADD alm2ilamb_wkflow/* /home/lmtuser/lmt_wkflow/bin/
 
 #
-CMD ["python" "lmt_post.py"]
+#CMD ["python" "lmt_post.py"]
 
